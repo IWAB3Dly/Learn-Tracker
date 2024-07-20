@@ -7,7 +7,7 @@ class DrawerListTile extends StatefulWidget {
   final bool isDrawerHowered;
   final VoidCallback onTap;
 
-  DrawerListTile({super.key, required this.icon, required this.text, this.isDrawerHowered = false, required this.onTap});
+  const DrawerListTile({super.key, required this.icon, required this.text, this.isDrawerHowered = false, required this.onTap});
 
   @override
   State<DrawerListTile> createState() => _DrawerListTileState();

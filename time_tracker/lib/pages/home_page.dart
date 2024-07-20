@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:time_tracker/components/drawer_list_tile.dart';
 import 'package:time_tracker/pages/learning_plan_page.dart';
+import 'package:time_tracker/pages/settings_page.dart';
 import 'package:time_tracker/pages/statistics_page.dart';
 import 'package:time_tracker/pages/time_tracker_page.dart';
 
@@ -12,7 +13,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final List<Widget> pagesList = [TimeTrackerPage(),StatisticsPage(),LearningPlanPage()];
+  final List<Widget> pagesList = [TimeTrackerPage(),StatisticsPage(),LearningPlanPage(),SettingsPage()];
 
   bool isDrawerHowered = false;
   int currentPageIndex = 0;
