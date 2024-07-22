@@ -3,6 +3,7 @@ import 'package:time_tracker/components/time_tracker_widgets/activity_tile.dart'
 import 'package:time_tracker/components/time_tracker_widgets/activity_adder.dart';
 import 'package:time_tracker/components/time_tracker_widgets/stopwatch_container.dart';
 import 'package:time_tracker/dart_classes/time_tracker/activities.dart';
+import 'package:time_tracker/configurations/logger.dart';
 
 class TimeTrackerPage extends StatefulWidget {
   const TimeTrackerPage({super.key});
@@ -13,6 +14,8 @@ class TimeTrackerPage extends StatefulWidget {
 
 class _TimeTrackerPageState extends State<TimeTrackerPage> {
 
+  
+
   final controller = TextEditingController();
 
   void addActivity(){
@@ -20,7 +23,7 @@ class _TimeTrackerPageState extends State<TimeTrackerPage> {
       if (controller.text.isNotEmpty) {
         activitiesList.add(Activity(activityName: controller.text, activitySeconds: 0));
         controller.clear();
-        print("added activity");
+        logger.d("added activity");
       }
     });
   }

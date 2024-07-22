@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:time_tracker/components/button_rounded.dart';
+import 'package:time_tracker/configurations/logger.dart';
 
 class StopWatchWidget extends StatefulWidget {
   const StopWatchWidget({super.key});
@@ -29,6 +30,7 @@ class _StopWatchWidgetState extends State<StopWatchWidget> {
   }
 
   void _resetTimer() {
+    logger.d('commited $seconds seconds');
     setState(() {
       seconds = 0;
     });

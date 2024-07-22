@@ -13,7 +13,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final List<Widget> pagesList = [TimeTrackerPage(),StatisticsPage(),LearningPlanPage(),SettingsPage()];
+  final List<Widget> pagesList = [const TimeTrackerPage(), const StatisticsPage(),const LearningPlanPage(), const SettingsPage()];
 
   bool isDrawerHowered = false;
   int currentPageIndex = 0;
