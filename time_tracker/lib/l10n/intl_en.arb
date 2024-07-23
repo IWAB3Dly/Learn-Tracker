@@ -1,5 +1,7 @@
 {
   "start": "Start",
   "stop": "Stop",
-  "commit": "Commit"
+  "commit": "Commit",
+  "itsYourNSession": "Its your {activitySessions} session",
+  "currentlyWorkingOn": "currently working on"
 }

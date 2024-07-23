@@ -1,5 +1,7 @@
 {
-    "start": "Запуск",
-    "stop": "Стоп",
-    "commit": "Записать"
-  }
+  "start": "Запуск",
+  "stop": "Стоп",
+  "commit": "Записать",
+  "itsYourNSession": "Это ваша {activitySessions} Сессия",
+  "currentlyWorkingOn": "currently working on"
+}

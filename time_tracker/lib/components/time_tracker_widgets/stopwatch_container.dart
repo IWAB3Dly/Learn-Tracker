@@ -6,7 +6,9 @@ import 'package:time_tracker/configurations/logger.dart';
 import 'package:time_tracker/generated/l10n.dart';
 
 class StopWatchWidget extends StatefulWidget {
-  const StopWatchWidget({super.key});
+  final ValueNotifier<int> secondsNotifier;
+  final VoidCallback finishSession;
+  const StopWatchWidget({super.key, required this.secondsNotifier, required this.finishSession});
 
   @override
   State<StopWatchWidget> createState() => _StopWatchWidgetState();
@@ -32,6 +34,8 @@ class _StopWatchWidgetState extends State<StopWatchWidget> {
 
   void _resetTimer() {
     logger.d('commited $seconds seconds');
+    widget.secondsNotifier.value = seconds;
+    widget.finishSession();
     setState(() {
       seconds = 0;
     });
@@ -54,9 +58,9 @@ class _StopWatchWidgetState extends State<StopWatchWidget> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-                RoundedButton(onTap: _startTimer, buttonTitle: S.of(context).start, buttonColor: MaterialStateProperty.all(Colors.green.shade600)),
-                RoundedButton(onTap: _stopTimer, buttonTitle: S.of(context).stop, buttonColor: MaterialStateProperty.all(Colors.orange.shade600)),
-                RoundedButton(onTap: _resetTimer, buttonTitle: S.of(context).commit, buttonColor: MaterialStateProperty.all(Colors.lightBlue.shade600)),
+              RoundedButton(onTap: _startTimer, buttonTitle: S.of(context).start, buttonColor: MaterialStateProperty.all(Colors.green.shade600)),
+              RoundedButton(onTap: _stopTimer, buttonTitle: S.of(context).stop, buttonColor: MaterialStateProperty.all(Colors.orange.shade600)),
+              RoundedButton(onTap: _resetTimer, buttonTitle: S.of(context).commit, buttonColor: MaterialStateProperty.all(Colors.lightBlue.shade600)),
             ],
           )
         ),

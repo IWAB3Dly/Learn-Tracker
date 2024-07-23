@@ -79,6 +79,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Its your {activitySessions} session`
+  String itsYourNSession(Object activitySessions) {
+    return Intl.message(
+      'Its your $activitySessions session',
+      name: 'itsYourNSession',
+      desc: '',
+      args: [activitySessions],
+    );
+  }
+
+  /// `currently working on`
+  String get currentlyWorkingOn {
+    return Intl.message(
+      'currently working on',
+      name: 'currentlyWorkingOn',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

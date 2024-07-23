@@ -20,9 +20,14 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ru';
 
+  static String m0(activitySessions) => "Это ваша ${activitySessions} Сессия";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "commit": MessageLookupByLibrary.simpleMessage("Записать"),
+        "currentlyWorkingOn":
+            MessageLookupByLibrary.simpleMessage("currently working on"),
+        "itsYourNSession": m0,
         "start": MessageLookupByLibrary.simpleMessage("Запуск"),
         "stop": MessageLookupByLibrary.simpleMessage("Стоп")
       };
