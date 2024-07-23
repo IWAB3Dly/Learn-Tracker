@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:time_tracker/components/button_rounded.dart';
 import 'package:time_tracker/configurations/logger.dart';
+import 'package:time_tracker/generated/l10n.dart';
 
 class StopWatchWidget extends StatefulWidget {
   const StopWatchWidget({super.key});
@@ -53,9 +54,9 @@ class _StopWatchWidgetState extends State<StopWatchWidget> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-                RoundedButton(onTap: _startTimer, buttonTitle: "Start", buttonColor: MaterialStateProperty.all(Colors.green.shade600)),
-                RoundedButton(onTap: _stopTimer, buttonTitle: "Stop", buttonColor: MaterialStateProperty.all(Colors.orange.shade600)),
-                RoundedButton(onTap: _resetTimer, buttonTitle: "Commit", buttonColor: MaterialStateProperty.all(Colors.lightBlue.shade600)),
+                RoundedButton(onTap: _startTimer, buttonTitle: S.of(context).start, buttonColor: MaterialStateProperty.all(Colors.green.shade600)),
+                RoundedButton(onTap: _stopTimer, buttonTitle: S.of(context).stop, buttonColor: MaterialStateProperty.all(Colors.orange.shade600)),
+                RoundedButton(onTap: _resetTimer, buttonTitle: S.of(context).commit, buttonColor: MaterialStateProperty.all(Colors.lightBlue.shade600)),
             ],
           )
         ),
