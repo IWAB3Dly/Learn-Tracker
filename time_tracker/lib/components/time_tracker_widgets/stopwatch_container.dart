@@ -33,6 +33,7 @@ class _StopWatchWidgetState extends State<StopWatchWidget> {
   }
 
   void _resetTimer() {
+    _timer.cancel();
     logger.d('commited $seconds seconds');
     widget.secondsNotifier.value = seconds;
     widget.finishSession();

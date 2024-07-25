@@ -53,8 +53,15 @@ class _TimeTrackerPageState extends State<TimeTrackerPage> {
 
   void finishSession(int secondsWorked){
      setState(() {
-       activitiesList[currentActivityIndex].activitySeconds += secondsWorked;
-       activitiesList[currentActivityIndex].activitySessions++;
+      if (currentActivityIndex==0) {
+        activitiesList[currentActivityIndex].activitySeconds += secondsWorked;
+      } 
+      else {
+        activitiesList[currentActivityIndex].activitySeconds += secondsWorked;
+        activitiesList[currentActivityIndex].activitySessions++;
+        activitiesList[0].activitySeconds += secondsWorked;
+      }
+      currentActivityIndex = 0;
     });
   }
 
@@ -67,7 +74,7 @@ class _TimeTrackerPageState extends State<TimeTrackerPage> {
   }
 
   List<Activity> activitiesList = [
-    Activity(activityName: "Programming", activitySeconds: 0, activitySessions: 1),
+    Activity(activityName: "Total Time Worked", activitySeconds: 0, activitySessions: 1),
     Activity(activityName: "Pooping", activitySeconds: 110, activitySessions: 1),
     Activity(activityName: "Dating", activitySeconds: 1012, activitySessions: 1),
   ];
@@ -117,13 +124,22 @@ class _TimeTrackerPageState extends State<TimeTrackerPage> {
                 itemCount: activitiesList.length+1,
                 itemBuilder: (context, index){
                   if (index<activitiesList.length) {
-                    return ActivityTile(
-                      activityName: activitiesList[index].activityName,
-                      secondsAmount: activitiesList[index].activitySeconds,
-                      onTap: ()=> trackForActivity(index),
-                    );
+                    if (index==0) {
+                      return ActivityTile(
+                        activityName: activitiesList[index].activityName,
+                        secondsAmount: activitiesList[index].activitySeconds,
+                        onTap: ()=> trackForActivity(index),
+                        isClickable: false,
+                      );
+                    } 
+                    else {
+                      return ActivityTile(
+                        activityName: activitiesList[index].activityName,
+                        secondsAmount: activitiesList[index].activitySeconds,
+                        onTap: ()=> trackForActivity(index),
+                      );
+                    }
                   }
-                  
                   else{
                     return ActivityAdder(controller: controller, onSubmitted: addActivity, hintColor: activityAdderHintColor, hintText: activityAdderHintText,);
                   }
