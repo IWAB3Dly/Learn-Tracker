@@ -14,6 +14,7 @@ dependencies:
   logger: ^2.4.0
   flutter_localizations:
     sdk: flutter
+  google_fonts: ^5.1.0
 
 dev_dependencies:
   flutter_test:
@@ -21,6 +22,10 @@ dev_dependencies:
   flutter_lints: ^2.0.0
 
 flutter:
+  assets:
+    - assets/images/sandclock.png
+    - assets/images/activityTrackerBackground.png
+    - assets/images/activityTileStar.png
   generate: true
   uses-material-design: true
 flutter_intl:

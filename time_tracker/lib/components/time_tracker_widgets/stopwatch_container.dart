@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:time_tracker/components/button_rounded.dart';
 import 'package:time_tracker/configurations/logger.dart';
-import 'package:time_tracker/generated/l10n.dart';
 
 class StopWatchWidget extends StatefulWidget {
   final ValueNotifier<int> secondsNotifier;
@@ -47,11 +46,18 @@ class _StopWatchWidgetState extends State<StopWatchWidget> {
     return Row(
       children: [
         Expanded(
-          flex: 7,
+          flex: 4,
+          child: SizedBox(
+            height: 80,
+            child: Image.asset('assets/images/sandclock.png'),
+          )
+        ),
+        Expanded(
+          flex: 8,
           child: Text(
           "${(seconds~/3600).toString().padLeft(2,'0')}:${((seconds%3600)~/60).toString().padLeft(2,'0')}:${(seconds%60).toString().padLeft(2,'0')}",
           style: const TextStyle(fontSize: 60, fontWeight: FontWeight.w500),
-          textAlign: TextAlign.center,
+            textAlign: TextAlign.start,
           )
         ),
         Expanded(
@@ -59,9 +65,9 @@ class _StopWatchWidgetState extends State<StopWatchWidget> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              RoundedButton(onTap: _startTimer, buttonTitle: S.of(context).start, buttonColor: MaterialStateProperty.all(Colors.green.shade600)),
-              RoundedButton(onTap: _stopTimer, buttonTitle: S.of(context).stop, buttonColor: MaterialStateProperty.all(Colors.orange.shade600)),
-              RoundedButton(onTap: _resetTimer, buttonTitle: S.of(context).commit, buttonColor: MaterialStateProperty.all(Colors.lightBlue.shade600)),
+              RoundedButton(onTap: _startTimer, icon: Icons.play_arrow_rounded, buttonColor: MaterialStateProperty.all(Colors.trackerStartButton)),
+              RoundedButton(onTap: _stopTimer, icon: Icons.pause_rounded, buttonColor: MaterialStateProperty.all(Colors.trackerStopButton)),
+              RoundedButton(onTap: _resetTimer, icon: Icons.download_done_rounded, buttonColor: MaterialStateProperty.all(Colors.trackerCommitButton)),
             ],
           )
         ),

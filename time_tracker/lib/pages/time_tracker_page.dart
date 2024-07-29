@@ -62,6 +62,8 @@ class _TimeTrackerPageState extends State<TimeTrackerPage> {
         activitiesList[0].activitySeconds += secondsWorked;
       }
       currentActivityIndex = 0;
+      currentActivitySessionsAmount = 0;
+      logger.d("Current Activity Index is $currentActivityIndex");
     });
   }
 
@@ -75,7 +77,7 @@ class _TimeTrackerPageState extends State<TimeTrackerPage> {
 
   List<Activity> activitiesList = [
     Activity(activityName: "Total Time Worked", activitySeconds: 0, activitySessions: 1),
-    Activity(activityName: "Pooping", activitySeconds: 110, activitySessions: 1),
+    Activity(activityName: "Programming", activitySeconds: 110, activitySessions: 1),
     Activity(activityName: "Dating", activitySeconds: 1012, activitySessions: 1),
   ];
 
@@ -100,14 +102,22 @@ class _TimeTrackerPageState extends State<TimeTrackerPage> {
                   )
                 ),
                 Expanded(
-                  flex: 8,
-                  child: Container(
-                    margin: const EdgeInsets.all(8),
-                    height: MediaQuery.of(context).size.height,
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: Theme.of(context).colorScheme.secondary),
-                    child: CurrentAcitiviyDisplayer(
-                      activityName: currentActivityName,
-                      activitySessions: currentActivitySessionsAmount,
+                  flex: 6,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Theme.of(context).colorScheme.secondary,
+                        image: const DecorationImage(
+                          image: AssetImage("assets/images/activityTrackerBackground.png"),
+                          fit: BoxFit.cover
+                        )
+                      ),
+                      child: CurrentAcitiviyDisplayer(
+                        activityName: currentActivityName,
+                        activitySessions: currentActivitySessionsAmount,
+                      ),
                     ),
                   )
                 ),
@@ -115,7 +125,7 @@ class _TimeTrackerPageState extends State<TimeTrackerPage> {
             ),
           ),
           Expanded(
-            flex: 15,
+            flex: 9,
             child: Container(
               margin: const EdgeInsets.all(8),
               height: MediaQuery.of(context).size.height,

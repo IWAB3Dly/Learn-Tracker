@@ -19,10 +19,15 @@ class ActivityTile extends StatelessWidget {
           child: GestureDetector(
             onTap: onTap,
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey.shade500, width: 2))),
+              padding: const EdgeInsets.only(right: 16, left: 8),
+              decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: Colors.trackerBorder, width: 6))),
               child: Row(
                 children: [
+                  Container(
+                    padding: const EdgeInsets.only(top: 5, right: 25, bottom: 5),
+                    height: MediaQuery.of(context).size.height/15,
+                    child: Image.asset('assets/images/activityTileStar.png'), 
+                  ),
                   Text(
                     activityName,
                     style: const TextStyle(fontSize: 22),

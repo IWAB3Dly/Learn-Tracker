@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 ThemeData lightThemeData(){
   return ThemeData(
@@ -6,8 +7,10 @@ ThemeData lightThemeData(){
     primaryColor: const Color.fromARGB(255, 51, 51, 51),
     hoverColor: const Color.fromARGB(255, 81, 81, 81),
     scaffoldBackgroundColor: Colors.white, 
+    textTheme: TextTheme(
+      bodyMedium: GoogleFonts.jua(color: const Color.fromARGB(255, 52, 55, 88))
+    ),
     colorScheme: ColorScheme(
-      
       secondary: const Color.fromARGB(255, 236, 234, 237),
       onError: Colors.grey.shade200,
       onBackground: Colors.grey.shade900,

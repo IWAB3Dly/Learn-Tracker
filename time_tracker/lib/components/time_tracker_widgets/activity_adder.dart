@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ActivityAdder extends StatefulWidget {
   final TextEditingController controller;
@@ -35,33 +36,38 @@ class _ActivityAdderState extends State<ActivityAdder> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey.shade500, width: 2))),
-      child: Row(
-        children: [
-          Expanded(
-            child: TextField(
-              focusNode: _focusNode,
-              onChanged: (value) {
-                setState(() {
-                  widget.hintText = "Add a new skill you want to master";
-                  widget.hintColor = Colors.grey.shade400;
-                });
-              },
-              controller: widget.controller,
-              onSubmitted:(value) => widget.onSubmitted(),
-              style: const TextStyle(
-                fontSize: 22
-              ),
-              decoration: InputDecoration(
-                hintText: _focusNode.hasFocus? null : widget.hintText,
-                hintStyle: TextStyle(color: widget.hintColor)
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: Color.fromARGB(255, 192, 194, 215), width: 6))),
+        child: Row(
+          children: [
+            Expanded(
+              child: TextField(
+                focusNode: _focusNode,
+                onChanged: (value) {
+                  setState(() {
+                    widget.hintText = "Add a new skill you want to master";
+                    widget.hintColor = Colors.grey.shade400;
+                  });
+                },
+                controller: widget.controller,
+                onSubmitted:(value) => widget.onSubmitted(),
+                style: GoogleFonts.jua(
+                  fontSize: 22,
+                  color: const Color.fromARGB(255, 52, 55, 88)
+                ),
+                decoration: InputDecoration(
+                  hintText: _focusNode.hasFocus? null : widget.hintText,
+                  hintStyle: TextStyle(color: widget.hintColor),
+                  border: InputBorder.none
+                ),
               ),
             ),
-          ),
-        ],
-      )
+          ],
+        )
+      ),
     );
   }
 }

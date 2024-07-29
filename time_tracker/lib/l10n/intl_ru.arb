@@ -2,6 +2,6 @@
   "start": "Запуск",
   "stop": "Стоп",
   "commit": "Записать",
-  "itsYourNSession": "Это ваша {activitySessions} Сессия",
-  "currentlyWorkingOn": "currently working on"
+  "itsYourNSession": "Its your {activitySessions} session",
+  "currentlyWorkingOn": "Now is going:"
 }
