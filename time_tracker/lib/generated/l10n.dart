@@ -99,6 +99,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Tasks Completed:`
+  String get overallTasksCompleted {
+    return Intl.message(
+      'Tasks Completed:',
+      name: 'overallTasksCompleted',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tasks Completed Today:`
+  String get tasksCompletedToday {
+    return Intl.message(
+      'Tasks Completed Today:',
+      name: 'tasksCompletedToday',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

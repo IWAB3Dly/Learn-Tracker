@@ -28,7 +28,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "currentlyWorkingOn":
             MessageLookupByLibrary.simpleMessage("currently working on"),
         "itsYourNSession": m0,
+        "overallTasksCompleted":
+            MessageLookupByLibrary.simpleMessage("Tasks Completed:"),
         "start": MessageLookupByLibrary.simpleMessage("Start"),
-        "stop": MessageLookupByLibrary.simpleMessage("Stop")
+        "stop": MessageLookupByLibrary.simpleMessage("Stop"),
+        "tasksCompletedToday":
+            MessageLookupByLibrary.simpleMessage("Tasks Completed Today:")
       };
 }

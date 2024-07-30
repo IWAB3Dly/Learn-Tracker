@@ -3,5 +3,7 @@
   "stop": "Stop",
   "commit": "Commit",
   "itsYourNSession": "Its your {activitySessions} session",
-  "currentlyWorkingOn": "currently working on"
+  "currentlyWorkingOn": "currently working on",
+  "overallTasksCompleted": "Tasks Completed:",
+  "tasksCompletedToday": "Tasks Completed Today:"
 }

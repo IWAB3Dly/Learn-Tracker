@@ -97,7 +97,7 @@ class _TimeTrackerPageState extends State<TimeTrackerPage> {
                   child: Container(
                     margin: const EdgeInsets.all(8),
                     height: MediaQuery.of(context).size.height,
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: Theme.of(context).colorScheme.secondary),
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: Colors.trackerContainerBackground),
                     child: StopWatchWidget(secondsNotifier: secondsNotifier, finishSession: () => finishSession(secondsNotifier.value),),
                   )
                 ),
@@ -108,7 +108,7 @@ class _TimeTrackerPageState extends State<TimeTrackerPage> {
                     child: DecoratedBox(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
-                        color: Theme.of(context).colorScheme.secondary,
+                        color: Colors.trackerContainerBackground,
                         image: const DecorationImage(
                           image: AssetImage("assets/images/activityTrackerBackground.png"),
                           fit: BoxFit.cover
@@ -129,7 +129,7 @@ class _TimeTrackerPageState extends State<TimeTrackerPage> {
             child: Container(
               margin: const EdgeInsets.all(8),
               height: MediaQuery.of(context).size.height,
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: Theme.of(context).colorScheme.secondary),
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: Colors.trackerContainerBackground),
               child: ListView.builder(
                 itemCount: activitiesList.length+1,
                 itemBuilder: (context, index){

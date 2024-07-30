@@ -14,7 +14,7 @@ class DrawerListTile extends StatefulWidget {
 }
 
 class _DrawerListTileState extends State<DrawerListTile> {
-  Color currentColor = const Color.fromARGB(255, 51, 51, 51);
+  Color currentColor = Colors.trackerCommitButton;
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +22,8 @@ class _DrawerListTileState extends State<DrawerListTile> {
       padding: const EdgeInsets.symmetric(vertical: 6),
       color: currentColor,
       child: MouseRegion(
-        onEnter: (event) => setState(()=>currentColor = Theme.of(context).hoverColor),
-        onExit: (event) => setState(()=>currentColor = Theme.of(context).primaryColor),
+        onEnter: (event) => setState(()=>currentColor = Colors.trackerStartButton),
+        onExit: (event) => setState(()=>currentColor = Colors.trackerCommitButton),
         child: InkWell(
           onTap: widget.onTap,
           child: Container(
