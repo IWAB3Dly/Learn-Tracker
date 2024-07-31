@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:time_tracker/components/drawer_list_tile.dart';
+import 'package:time_tracker/database/sqflite_db_helper.dart';
 import 'package:time_tracker/pages/learning_plan_page.dart';
 import 'package:time_tracker/pages/settings_page.dart';
 import 'package:time_tracker/pages/statistics_page.dart';
@@ -14,10 +15,18 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final List<Widget> pagesList = [const TimeTrackerPage(), const TasksPage(), const StatisticsPage(),const LearningPlanPage(), const SettingsPage()];
+  final DatabaseHelper databaseHelper = DatabaseHelper();
+
+  List<Widget>? pageList;
 
   bool isDrawerHowered = false;
   int currentPageIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    pageList = [TimeTrackerPage(dbHelper: databaseHelper,), const TasksPage(), const StatisticsPage(),const LearningPlanPage(), const SettingsPage()];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +54,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
           ),
-          Expanded(child: pagesList[currentPageIndex])
+          Expanded(child: pageList![currentPageIndex])
         ],
       )
     );

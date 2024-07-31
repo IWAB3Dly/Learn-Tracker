@@ -5,15 +5,20 @@ import 'package:time_tracker/components/time_tracker_widgets/activity_tracker.da
 import 'package:time_tracker/components/time_tracker_widgets/stopwatch_container.dart';
 import 'package:time_tracker/dart_classes/time_tracker/activities.dart';
 import 'package:time_tracker/configurations/logger.dart';
+import 'package:time_tracker/database/sqflite_db_helper.dart';
 
 class TimeTrackerPage extends StatefulWidget {
-  const TimeTrackerPage({super.key});
+  final DatabaseHelper dbHelper;
+
+  const TimeTrackerPage({super.key, required this.dbHelper});
 
   @override
   State<TimeTrackerPage> createState() => _TimeTrackerPageState();
 }
 
 class _TimeTrackerPageState extends State<TimeTrackerPage> {
+
+  late DatabaseHelper dbHelper; 
 
   String currentActivityName = "Programming";
   int currentActivitySessionsAmount = 0;
@@ -22,6 +27,7 @@ class _TimeTrackerPageState extends State<TimeTrackerPage> {
   ValueNotifier<int> secondsNotifier = ValueNotifier(0);
   String activityAdderHintText = "Add a new skill you want to master";
   Color activityAdderHintColor = Colors.grey.shade400;
+  late Future<int?> _activityListLength;
 
   void addActivity(){
     bool isRepeatedName = false;
@@ -32,8 +38,16 @@ class _TimeTrackerPageState extends State<TimeTrackerPage> {
         }
       }
       if (!isRepeatedName) {
-        if (controller.text.isNotEmpty) {
-          activitiesList.add(Activity(activityName: controller.text, activitySeconds: 0, activitySessions: 1));
+        if (controller.text.isNotEmpty){
+          insertActivityToDB();
+          activitiesList.add(
+            Activity(
+              id: activitiesList.length, 
+              activityName: controller.text, 
+              activitySeconds: 0, 
+              activitySessions: 1
+            )
+          );
           controller.clear();
           logger.d("added activity");
           activityAdderHintText = "Add a new skill you want to master";
@@ -48,18 +62,55 @@ class _TimeTrackerPageState extends State<TimeTrackerPage> {
         });
         logger.e('This name already exists');
       }
+      _activityListLength = Future.value(activitiesList.length);
     });
+  }
+
+  void insertActivityToDB()async{
+    await 
+    dbHelper.insertActivity(
+      Activity(
+        id: activitiesList.length,
+        activityName: controller.text, 
+        activitySeconds:0, 
+        activitySessions: 0
+      )
+    );
   }
 
   void finishSession(int secondsWorked){
      setState(() {
       if (currentActivityIndex==0) {
         activitiesList[currentActivityIndex].activitySeconds += secondsWorked;
+        dbHelper.updateActivity(
+          Activity(
+            id: currentActivityIndex,
+            activityName: currentActivityName,
+            activitySeconds: activitiesList[currentActivityIndex].activitySeconds,
+            activitySessions: activitiesList[currentActivityIndex].activitySessions+1
+          )
+        );
       } 
       else {
         activitiesList[currentActivityIndex].activitySeconds += secondsWorked;
         activitiesList[currentActivityIndex].activitySessions++;
         activitiesList[0].activitySeconds += secondsWorked;
+        dbHelper.updateActivity(
+          Activity(
+            id: currentActivityIndex,
+            activityName: currentActivityName,
+            activitySeconds: activitiesList[currentActivityIndex].activitySeconds,
+            activitySessions: activitiesList[currentActivityIndex].activitySeconds+1
+          )
+        );
+        dbHelper.updateActivity(
+          Activity(
+            id: 0,
+            activityName: activitiesList[0].activityName,
+            activitySeconds: activitiesList[0].activitySeconds,
+            activitySessions: activitiesList[0].activitySessions+1
+          )
+        );
       }
       currentActivityIndex = 0;
       currentActivitySessionsAmount = 0;
@@ -75,12 +126,30 @@ class _TimeTrackerPageState extends State<TimeTrackerPage> {
     });
   }
 
-  List<Activity> activitiesList = [
-    Activity(activityName: "Total Time Worked", activitySeconds: 0, activitySessions: 1),
-    Activity(activityName: "Programming", activitySeconds: 110, activitySessions: 1),
-    Activity(activityName: "Dating", activitySeconds: 1012, activitySessions: 1),
-  ];
+  List<Activity> activitiesList = [];
 
+  Future<void> updateActivityList() async{
+    activitiesList = await dbHelper.getActivityList();
+  }
+
+  Future<int> getActivityListLength() async{
+    await updateActivityList();
+    int activityListLength = activitiesList.length;
+    return activityListLength;
+  }
+
+  @override
+  void initState(){
+    super.initState();
+    dbHelper = widget.dbHelper;
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _activityListLength = Future.value(getActivityListLength());
+    logger.d("loaded activity");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -130,28 +199,40 @@ class _TimeTrackerPageState extends State<TimeTrackerPage> {
               margin: const EdgeInsets.all(8),
               height: MediaQuery.of(context).size.height,
               decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: Colors.trackerContainerBackground),
-              child: ListView.builder(
-                itemCount: activitiesList.length+1,
-                itemBuilder: (context, index){
-                  if (index<activitiesList.length) {
-                    if (index==0) {
-                      return ActivityTile(
-                        activityName: activitiesList[index].activityName,
-                        secondsAmount: activitiesList[index].activitySeconds,
-                        onTap: ()=> trackForActivity(index),
-                        isClickable: false,
-                      );
-                    } 
-                    else {
-                      return ActivityTile(
-                        activityName: activitiesList[index].activityName,
-                        secondsAmount: activitiesList[index].activitySeconds,
-                        onTap: ()=> trackForActivity(index),
-                      );
-                    }
+              child: FutureBuilder(
+                future: _activityListLength,
+                  builder:(context, snapshot) { 
+                    if (snapshot.hasData){
+                      return ListView.builder(
+                      itemCount: snapshot.data!+1,
+                      itemBuilder: (context, index){
+                        logger.d(activitiesList.length+1);
+                        if (index < snapshot.data!) {
+                          if (index==0) {
+                            return ActivityTile(
+                              activityName: activitiesList[index].activityName,
+                              secondsAmount: activitiesList[index].activitySeconds,
+                              onTap: ()=> trackForActivity(index),
+                              isClickable: false,
+                            );
+                          } 
+                          else {
+                            return ActivityTile(
+                              activityName: activitiesList[index].activityName,
+                              secondsAmount: activitiesList[index].activitySeconds,
+                              onTap: ()=> trackForActivity(index),
+                            );
+                          }
+                        }
+                        else{
+                          return ActivityAdder(controller: controller, onSubmitted: addActivity, hintColor: activityAdderHintColor, hintText: activityAdderHintText,);
+                        }
+                      }
+                    );
                   }
-                  else{
-                    return ActivityAdder(controller: controller, onSubmitted: addActivity, hintColor: activityAdderHintColor, hintText: activityAdderHintText,);
+                  else {
+                    logger.d("loading");
+                    return const Center(child: Text('boogogaaga'));
                   }
                 }
               ),
