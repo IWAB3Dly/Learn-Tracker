@@ -30,9 +30,16 @@ class DatabaseHelper {
         activitySessions int
       )
     ''');
+    await db.insert('activitiesList', Activity(
+      id: 0,
+      activityName: "Overall Working Time",
+      activitySeconds: 0,
+      activitySessions: 0
+    ).toMap());
   }
 
   Future<void> updateDatabase(Database database) async{
+
   }
 
   Future<List<Activity>> getActivityList() async {
@@ -51,6 +58,12 @@ class DatabaseHelper {
 
   Future<void> deleteAllActivities(Database db) async {
     await db.execute('DELETE FROM activitiesList');
+    await db.insert('activitiesList', Activity(
+      id: 0,
+      activityName: "Overall Working Time",
+      activitySeconds: 0,
+      activitySessions: 0
+    ).toMap());
   }
 
   Future<void> updateActivity(Activity activity) async {
