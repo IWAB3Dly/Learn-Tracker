@@ -44,7 +44,7 @@ class DatabaseHelper {
 
   Future<List<Activity>> getActivityList() async {
     final db = await database;
-    updateDatabase(db);
+    //updateDatabase(db);
     final List<Map<String, dynamic>> maps = await db.query('activitiesList');
     return List.generate(maps.length, (i) {
       return Activity.fromMap(maps[i]);

@@ -65,9 +65,24 @@ class _StopWatchWidgetState extends State<StopWatchWidget> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              RoundedButton(onTap: _startTimer, icon: Icons.play_arrow_rounded, buttonColor: MaterialStateProperty.all(Colors.trackerStartButton)),
-              RoundedButton(onTap: _stopTimer, icon: Icons.pause_rounded, buttonColor: MaterialStateProperty.all(Colors.trackerStopButton)),
-              RoundedButton(onTap: _resetTimer, icon: Icons.download_done_rounded, buttonColor: MaterialStateProperty.all(Colors.trackerCommitButton)),
+              RoundedButton(
+                onTap: _startTimer,
+                icon: Icons.play_arrow_rounded, 
+                buttonColor: MaterialStateProperty.all(Colors.trackerStartButton),
+                buttonSize: 36,
+              ),
+              RoundedButton(
+                onTap: _stopTimer, 
+                icon: Icons.pause_rounded, 
+                buttonColor: MaterialStateProperty.all(Colors.trackerStopButton),
+                buttonSize: 36,
+              ),
+              RoundedButton(
+                onTap: _resetTimer, 
+                icon: Icons.download_done_rounded, 
+                buttonColor: MaterialStateProperty.all(Colors.trackerCommitButton),
+                buttonSize: 36,
+              ),
             ],
           )
         ),

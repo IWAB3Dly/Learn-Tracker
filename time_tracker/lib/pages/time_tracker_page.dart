@@ -73,49 +73,52 @@ class _TimeTrackerPageState extends State<TimeTrackerPage> {
         id: activitiesList.length,
         activityName: controller.text, 
         activitySeconds:0, 
-        activitySessions: 0
+        activitySessions: 1
       )
     );
   }
 
   void finishSession(int secondsWorked){
-     setState(() {
-      if (currentActivityIndex==0) {
-        activitiesList[currentActivityIndex].activitySeconds += secondsWorked;
-        dbHelper.updateActivity(
-          Activity(
-            id: currentActivityIndex,
-            activityName: currentActivityName,
-            activitySeconds: activitiesList[currentActivityIndex].activitySeconds,
-            activitySessions: activitiesList[currentActivityIndex].activitySessions+1
-          )
-        );
-      } 
-      else {
-        activitiesList[currentActivityIndex].activitySeconds += secondsWorked;
-        activitiesList[currentActivityIndex].activitySessions++;
-        activitiesList[0].activitySeconds += secondsWorked;
-        dbHelper.updateActivity(
-          Activity(
-            id: currentActivityIndex,
-            activityName: currentActivityName,
-            activitySeconds: activitiesList[currentActivityIndex].activitySeconds,
-            activitySessions: activitiesList[currentActivityIndex].activitySeconds+1
-          )
-        );
-        dbHelper.updateActivity(
-          Activity(
-            id: 0,
-            activityName: activitiesList[0].activityName,
-            activitySeconds: activitiesList[0].activitySeconds,
-            activitySessions: activitiesList[0].activitySessions+1
-          )
-        );
-      }
-      currentActivityIndex = 0;
-      currentActivitySessionsAmount = 0;
-      logger.d("Current Activity Index is $currentActivityIndex");
-    });
+    if (secondsWorked > 0) {
+      setState(() {
+        if (currentActivityIndex==0) {
+          activitiesList[currentActivityIndex].activitySeconds += secondsWorked;
+          dbHelper.updateActivity(
+            Activity(
+              id: 0,
+              activityName: currentActivityName,
+              activitySeconds: activitiesList[currentActivityIndex].activitySeconds,
+              activitySessions: activitiesList[currentActivityIndex].activitySessions
+            )
+          );
+        } 
+        else {
+          activitiesList[currentActivityIndex].activitySeconds += secondsWorked;
+          activitiesList[currentActivityIndex].activitySessions++;
+          activitiesList[0].activitySeconds += secondsWorked;
+          dbHelper.updateActivity(
+            Activity(
+              id: currentActivityIndex,
+              activityName: currentActivityName,
+              activitySeconds: activitiesList[currentActivityIndex].activitySeconds,
+              activitySessions: activitiesList[currentActivityIndex].activitySessions
+            )
+          );
+          logger.d(activitiesList[currentActivityIndex].activitySessions);
+          dbHelper.updateActivity(
+            Activity(
+              id: 0,
+              activityName: activitiesList[0].activityName,
+              activitySeconds: activitiesList[0].activitySeconds,
+              activitySessions: activitiesList[0].activitySessions+1
+            )
+          );
+        }
+        currentActivityIndex = 0;
+        currentActivitySessionsAmount = 0;
+        logger.d("Current Activity Index is $currentActivityIndex");
+      });
+    }
   }
 
   void trackForActivity(int activityIndex){
@@ -123,6 +126,7 @@ class _TimeTrackerPageState extends State<TimeTrackerPage> {
       currentActivityName = activitiesList[activityIndex].activityName;
       currentActivitySessionsAmount = activitiesList[activityIndex].activitySessions;
       currentActivityIndex = activityIndex;
+      logger.d(activitiesList[activityIndex].activitySessions);
     });
   }
 
@@ -148,7 +152,6 @@ class _TimeTrackerPageState extends State<TimeTrackerPage> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     _activityListLength = Future.value(getActivityListLength());
-    logger.d("loaded activity");
   }
 
   @override
@@ -206,7 +209,6 @@ class _TimeTrackerPageState extends State<TimeTrackerPage> {
                       return ListView.builder(
                       itemCount: snapshot.data!+1,
                       itemBuilder: (context, index){
-                        logger.d(activitiesList.length+1);
                         if (index < snapshot.data!) {
                           if (index==0) {
                             return ActivityTile(

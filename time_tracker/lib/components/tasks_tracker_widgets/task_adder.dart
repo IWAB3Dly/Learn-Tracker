@@ -3,18 +3,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ActivityAdder extends StatefulWidget {
+class TaskAdder extends StatefulWidget {
   final TextEditingController controller;
   final VoidCallback onSubmitted;
-  String hintText;
-  Color hintColor;
-  ActivityAdder({super.key, required this.controller, required this.onSubmitted, required this.hintText, required this.hintColor});
+  const TaskAdder({super.key, required this.controller, required this.onSubmitted});
 
   @override
-  State<ActivityAdder> createState() => _ActivityAdderState();
+  State<TaskAdder> createState() => _TaskAdderState();
 }
 
-class _ActivityAdderState extends State<ActivityAdder> {
+class _TaskAdderState extends State<TaskAdder> {
   final FocusNode _focusNode = FocusNode();
 
   @override
@@ -46,12 +44,6 @@ class _ActivityAdderState extends State<ActivityAdder> {
             Expanded(
               child: TextField(
                 focusNode: _focusNode,
-                onChanged: (value) {
-                  setState(() {
-                    widget.hintText = "Add a new skill you want to master";
-                    widget.hintColor = Colors.grey.shade400;
-                  });
-                },
                 controller: widget.controller,
                 onSubmitted:(value) => widget.onSubmitted(),
                 style: GoogleFonts.jua(
@@ -59,8 +51,8 @@ class _ActivityAdderState extends State<ActivityAdder> {
                   color: Colors.trackerText
                 ),
                 decoration: InputDecoration(
-                  hintText: _focusNode.hasFocus? null : widget.hintText,
-                  hintStyle: TextStyle(color: widget.hintColor),
+                  hintText: _focusNode.hasFocus? null : "Add a new task to complete",
+                  hintStyle: const TextStyle(color: Colors.trackerStopButton),
                   border: InputBorder.none
                 ),
               ),
